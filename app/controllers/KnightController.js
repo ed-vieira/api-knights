@@ -10,13 +10,19 @@ var HeroesModel= mongoose.model('Heroes');
  * 
  */
 exports.getAllKnights= function(req, res){
- KnightModel.find({}, function(error, objects){
-       if(error){
-           res.send(error);
-       }else{
-         res.json({knights : objects});
-       }
- });
+
+      KnightModel.find({}, 
+            " name nickname birthday attributKey weapons.name weapons.mod "  
+            +" weapons.attr weapons.equipped attributes ", 
+        function(error, objects){
+          if(error){
+             res.send(error);
+          }else{
+             
+            res.json(objects);
+         }
+      });
+
 }
 
 
@@ -33,7 +39,7 @@ exports.getById= function(req, res){
              default:{error}
          });
       }else{
-         res.json({knight: object});
+         res.json(object);
       }
 
   });
@@ -76,7 +82,7 @@ exports.deleteUpdate = function (req, res) {
           res.send(err);
         }else{
 
-          res.json({knight: object});
+          res.json(object);
         }    
       });
        
@@ -109,7 +115,7 @@ exports.deleteUpdate = function (req, res) {
   
             res.json({
               message: "Knight Removido",
-              knight: object
+              object
             });
           }    
         });
@@ -124,11 +130,11 @@ exports.deleteUpdate = function (req, res) {
 
 exports.getHeroes = function(req, res){
   
-  HeroesModel.find({isHero: true}, function(error, objects){
+  KnightModel.find({isHero: true}, function(error, objects){
     if(error){
         res.send(error);
     }else{
-      res.json({knights : objects});
+      res.json(objects);
     }
 })
 
