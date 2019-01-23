@@ -122,14 +122,16 @@ exports.deleteUpdate = function (req, res) {
 
 
 
-exports.filter = function(req, res){
-  HeroesModel.find({name: 'getulio'}, function(error, objects){
+exports.getHeroes = function(req, res){
+  
+  HeroesModel.find({isHero: true}, function(error, objects){
     if(error){
         res.send(error);
     }else{
       res.json({knights : objects});
     }
 })
+
 }
 
 

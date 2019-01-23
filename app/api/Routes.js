@@ -13,7 +13,7 @@ module.exports = function(app){
      
     app.route('/knights/:id').delete(KnightCtrl.delete)  
 
-    app.route('/knights/?filter=heroes').get(KnightCtrl.filter)  
+    app.route('/knights/?filter=heroes').get(KnightCtrl.getHeroes)  
 
 
 };
