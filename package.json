@@ -1,0 +1,29 @@
+{
+  "name": "api-knights",
+  "version": "1.0.0",
+  "description": "API para o desafio Knights",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ed-vieira/api-knights.git"
+  },
+  "keywords": [
+    "knights",
+    "api",
+    "desafio"
+  ],
+  "author": "Edson Vieira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ed-vieira/api-knights/issues"
+  },
+  "homepage": "https://github.com/ed-vieira/api-knights#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.6"
+  }
+}
