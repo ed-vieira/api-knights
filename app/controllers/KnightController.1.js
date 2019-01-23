@@ -92,61 +92,50 @@ exports.deleteUpdate = function (req, res) {
    */
   exports.delete = function (req, res) {
 
-    KnightModel.findById(req.params.id, function(error, object){
-      if(error){
-         res.send({
-            message: "Knight não encontrado",
-            details: `Busca por id= ${req.params.knight_id} não retornou nenhum resultado.`,
-             default:{error}
-         });
-      }else{
+    var hero = new HeroesModel(req.body);
+    hero.save(function (err, object) {
+      if (err) {
+        res.send(err);
+      } 
+    });
   
-        object.isHero= true;
-        object.save(function(err, object) {
-          if(err){
-            res.send(err);
-          }else{
-  
-            res.json({
-              message: "Knight Removido",
-              knight: object
-            });
-          }    
-        });
-         
+    KnightModel.deleteOne({ _id: req.params.id }, function (err, object) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.json({ message: `Knigth deletado com sucesso. ID  ${req.params.id}` });
       }
+    })
   
-  });
-    
-}
+  }
 
 
 
 exports.filter = function(req, res){
-  HeroesModel.find({name: 'getulio'}, function(error, objects){
+  HeroesModel.find({}, function(error, objects){
     if(error){
         res.send(error);
     }else{
       res.json({knights : objects});
     }
-})
+});
 }
 
 
   /**
    * 
-   */
+ 
   exports.deleteKnight = function(req, res) {
 
     KnightModel.deleteOne({_id: req.params.id}, function(err, object) {
         if(err){
           res.send(err);
         }else{
-          res.json({ message: `Knigth deletado com sucesso. ID  ${req.params.id}` });
+          res.json({ message: 'Dados deletados com sucesso. ID ' + req.params.id });
         } 
     })
    }
-
+*/
 
 
 

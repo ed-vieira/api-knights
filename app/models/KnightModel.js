@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 
 
 const KnightSchema = new Schema({
+   
    name:  String,
    nickname: String,
    birthday: Date,
@@ -14,7 +15,10 @@ const KnightSchema = new Schema({
    exp: Number,
 
    weapons: [{
-    type: Schema.Types.ObjectId, ref: 'Weapons'
+      name: String,
+      mod: Number,
+      attr: String,
+      equipped: Boolean,
    }],
 
    attributes: {
@@ -27,7 +31,24 @@ const KnightSchema = new Schema({
    },
    
 
+
 });
+
+
+
+function softDeleteMiddleware(next) {
+  // If `isDeleted` is not set on the query, set it to `false` so we only
+  // get docs that haven't been deleted by default
+  var filter = this.getQuery();
+  if (filter.isHero == null) {
+    filter.isHero = false;
+  }
+  next();
+}
+
+
+KnightSchema.pre('find', softDeleteMiddleware);
+KnightSchema.pre('findOne', softDeleteMiddleware);
 
 
 module.exports = KnightSchema;
