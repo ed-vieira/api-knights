@@ -4,7 +4,7 @@
  */
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+var moment = require('moment');
 
 const KnightSchema = new Schema({
    
@@ -12,7 +12,7 @@ const KnightSchema = new Schema({
    nickname: String,
    birthday: Date,
    keyAttribute: String,
-   exp: Number,
+   
 
    isHero:{
       type: Boolean,
@@ -38,6 +38,9 @@ const KnightSchema = new Schema({
    
 
 
+},{
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true }
 });
 
 
@@ -52,12 +55,27 @@ function softDeleteMiddleware(next) {
   next();
 }
 
-
 KnightSchema.pre('find', softDeleteMiddleware);
 KnightSchema.pre('findOne', softDeleteMiddleware);
 
 
+
+KnightSchema.virtual('age').get(function(){
+  return moment().diff(moment(this.birthday, 'YYYYMMDD'), 'years')
+});
+
+
+
+KnightSchema.virtual('exp').get(function(){
+    return Math.floor(( this.age - 7) * Math.pow(22, 1.45));
+});
+
+
+
+
+
 module.exports = KnightSchema;
+
 
 
 

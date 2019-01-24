@@ -12,17 +12,16 @@ var HeroesModel= mongoose.model('Heroes');
 exports.getAllKnights= function(req, res){
 
       KnightModel.find({}, 
-            " name nickname birthday keyAttribute weapons.name weapons.mod "  
-            +" weapons.attr weapons.equipped attributes ", 
+            " name nickname birthday age keyAttribute weapons.name weapons.mod "  
+            +" weapons.attr weapons.equipped attributes exp", 
         function(error, objects){
           if(error){
              res.send(error);
-          }else{
-             
+          }else{       
+           
             res.json(objects);
          }
-      });
-
+      })
 }
 
 
