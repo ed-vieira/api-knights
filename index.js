@@ -1,10 +1,11 @@
 const express = require('express'),
   app = express(),
+  cors = require('cors'),
    port = process.env.PORT || 3300,
     dbConfig= require('./app/models/mongoose-config'),
       bodyParser = require('body-parser');
  
-
+/*
 //headers
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -13,7 +14,9 @@ app.use(function (req, res, next) {
        res.setHeader('Access-Control-Allow-Credentials', true);
          next();
   });
+*/
 
+  app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

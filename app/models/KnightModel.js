@@ -12,12 +12,24 @@ var moment = require('moment');
  */
 const KnightSchema = new Schema({
    
-   name:  String,
-   nickname: String,
-   birthday: Date,
-   keyAttribute: String,
-   
+   name:  {
+    type: String,
+    required: true
+    },
+   nickname: {
+     type: String,
+     required: true
+  },
+   birthday: {
+     type: Date,
+     required: true
+    },
 
+   keyAttribute: {
+    type: String,
+    required: true
+   },
+   
    isHero:{
       type: Boolean,
       required: true,
@@ -25,19 +37,31 @@ const KnightSchema = new Schema({
    },
 
    weapons: [{
-      name: String,
-      mod: Number,
-      attr: String,
-      equipped: Boolean,
+      name:{
+        type: String,
+        required: true
+      }, 
+      mod: {
+        type: Number,
+        required: true
+      }, 
+      attr: {
+        type: String,
+        required: true
+      }, 
+      equipped: {
+        type: Boolean,
+        required: true
+      } 
    }],
 
    attributes: {
-     strenght: Number,
-     dexterity: Number,
-     constitution: Number,
-     intelligence: Number,
-     wisdom: Number,
-     charisma: Number,
+     strenght:{ type: Number, required: true},
+     dexterity: { type: Number, required: true},
+     constitution: { type: Number, required: true},
+     intelligence: { type: Number, required: true},
+     wisdom: { type: Number, required: true},
+     charisma: { type: Number, required: true},
    },
    
 
@@ -68,10 +92,12 @@ KnightSchema.pre('find', softDelete);
 KnightSchema.pre('findOne', softDelete);
 
 
+
+
 /**
  * Modificadores de atributos
  */
-function mod(attr){
+KnightSchema.methods.mod = function mod(attr){
     if(attr <= 8){
      return -2;
    }  
@@ -134,7 +160,7 @@ KnightSchema.virtual('equippedWeapon').get(function(){
 
 KnightSchema.virtual('attack').get(function(){
    //calcula o poder de attack
-  return 10 + mod(this.keyAttr) + this.equippedWeapon.mod;
+  return 10 + this.mod(this.keyAttr) + this.equippedWeapon.mod;
 });
 
 
