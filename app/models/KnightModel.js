@@ -6,6 +6,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var moment = require('moment');
 
+/**
+ * Define o esquema e habilita o uso de atributos 'virtuais' que são gerados
+ * apartir de combinações a calculos de atributos existentes
+ */
 const KnightSchema = new Schema({
    
    name:  String,
@@ -44,10 +48,12 @@ const KnightSchema = new Schema({
 });
 
 
-
+/**
+ * SoftDelete é um middleware que simula a exclusão de um elemento
+ * de forma que ele não seja exibido na query padrão
+ * sendo apenas exibido quando especificado 
+ */   
 function softDelete(next) {
-  // SoftDelete é um middleware que simula a exclusão de um elemento de forma que ele não seja exibido na query padrão
-  // E é apenas exibido quando especificado    
   var filter = this.getQuery();
   if (filter.isHero == null) {
     filter.isHero = false;
@@ -55,13 +61,17 @@ function softDelete(next) {
   next();
 }
 
+
+
 //Passando o Middleware para as os metodos 'find' e 'findOne' do mongoose
 KnightSchema.pre('find', softDelete);
 KnightSchema.pre('findOne', softDelete);
 
 
+/**
+ * Modificadores de atributos
+ */
 function mod(attr){
-  //Modificadores de atributos
     if(attr <= 8){
      return -2;
    }  
@@ -87,7 +97,7 @@ function mod(attr){
 
 
 KnightSchema.virtual('age').get(function(){
-  //calcula a idade com base na data de nascimento
+  //calcula a idade com base na data de nascimento 
   return moment().diff(moment(this.birthday, 'YYYYMMDD'), 'years')
 });
 

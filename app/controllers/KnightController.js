@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose'); 
 var KnightModel= mongoose.model('Knights');
-var HeroesModel= mongoose.model('Heroes');
+
 
 
 
