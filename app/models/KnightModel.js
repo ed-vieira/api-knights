@@ -73,37 +73,8 @@ KnightSchema.virtual('exp').get(function(){
 
 
 
-
 module.exports = KnightSchema;
 
-
-
-
-/*
-function getYears(x) {
-   return Math.floor(x / 1000 / 60 / 60 / 24 / 365);
- }
-
- async function run() {
-   let promises = [];
-   let docs = await KnightSchema.find({});
-   
-   docs.forEach((doc) => {
-     let n = Date.now();
-     let d = new Date(doc.birthday);
-     doc.set('age', getYears(n - d));
-     promises.push(doc.save());
-   });
-   
-   Promise.all(promises).then((saved) => {
-     console.log(saved);
-     return conn.close();
-   });
-   
- }
- 
- run().catch(console.error);
-*/
 
 
 
