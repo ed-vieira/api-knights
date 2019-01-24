@@ -5,6 +5,6 @@ var Schemas = require('./Schemas');
 //MongoDB URL 
 const url= 'mongodb://localhost:27017/knights_db';
 
-// mongoose instance connection url connection
+// Instancia o mongoose e faz a conexão
 exports= mongoose.Promise = global.Promise;
 exports=  mongoose.connect(url, { useNewUrlParser: true }); 

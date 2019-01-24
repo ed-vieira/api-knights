@@ -7,13 +7,14 @@ var HeroesModel= mongoose.model('Heroes');
 
 
 /**
- * 
+ *  Listar todos os knghts 
  */
 exports.getAllKnights= function(req, res){
 
       KnightModel.find({}, 
             " name nickname birthday age keyAttribute weapons.name weapons.mod "  
-            +" weapons.attr weapons.equipped attributes exp", 
+            +" weapons.attr weapons.equipped attributes exp "
+            +" equippedWeapon attack ", 
         function(error, objects){
           if(error){
              res.send(error);
@@ -27,14 +28,14 @@ exports.getAllKnights= function(req, res){
 
 
 /**
- * 
+ * seleciona um elemento por id
  */
 exports.getById= function(req, res){
   KnightModel.findById(req.params.id, function(error, object){
       if(error){
          res.send({
             message: "Knight não encontrado",
-            details: "Busca por id= "+req.params.knight_id+" não retornou nenhum resultado.",
+            details: "Busca por id= "+req.params.id+" não retornou nenhum resultado.",
              default:{error}
          });
       }else{
@@ -47,7 +48,7 @@ exports.getById= function(req, res){
 
 
 /**
- * 
+ *  Atualiza os dados do knight
  */
 exports.update = function(req, res) {
     KnightModel.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, function(error, object) {
@@ -61,62 +62,28 @@ exports.update = function(req, res) {
   
 
 
-  /**
-   * 
-   */
-exports.deleteUpdate = function (req, res) {
-
-  KnightModel.findById(req.params.id, function(error, object){
-    if(error){
-       res.send({
-          message: "Knight não encontrado",
-          details: "Busca por id= "+req.params.knight_id+" não retornou nenhum resultado.",
-           default:{error}
-       });
-    }else{
-
-      object.hero= true;
-      object.save(function(err, object) {
-        if(err){
-          res.send(err);
-        }else{
-
-          res.json(object);
-        }    
-      });
-       
-    }
-
-});
-
-}
-  
 
   /**
-   * 
+   *  Exclui um elemento da lista principal 'Knights' fazendo com que passe para lista 'Hall of Heroes'  
    */
   exports.delete = function (req, res) {
 
     KnightModel.findById(req.params.id, function(error, object){
       if(error){
-         res.send({
-            message: "Knight não encontrado",
-            details: `Busca por id= ${req.params.knight_id} não retornou nenhum resultado.`,
+          res.send({
+             message: "Knight não encontrado",
+             details: `Busca por id= ${req.params.knight_id} não retornou nenhum resultado.`,
              default:{error}
-         });
+          });
       }else{
   
-        object.isHero= true;
-        object.save(function(err, object) {
-          if(err){
-            res.send(err);
-          }else{
-  
-            res.json({
-              message: "Knight Removido",
-              object
-            });
-          }    
+         object.isHero= true;
+         object.save(function(err, object) {
+            if(err){
+              res.send(err);
+             }else{
+             res.json({message: "Knight Removido", object});
+             }    
         });
          
       }
@@ -126,7 +93,9 @@ exports.deleteUpdate = function (req, res) {
 }
 
 
-
+/**
+ *  Retorna A lista Hall of Heroes 
+ */
 exports.getHeroes = function(req, res){
   
   KnightModel.find({isHero: true}, function(error, objects){
@@ -141,7 +110,7 @@ exports.getHeroes = function(req, res){
 
 
   /**
-   * 
+   *  Exclui definitivamente um elemento
    */
   exports.deleteKnight = function(req, res) {
 
@@ -158,7 +127,9 @@ exports.getHeroes = function(req, res){
 
 
 
-
+/**
+ *  Adiciona um novo knight
+ */
   exports.add = function(req, res) {
     var knight = new KnightModel(req.body);
       knight.save(function(err, object) {
