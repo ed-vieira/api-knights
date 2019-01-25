@@ -62,13 +62,28 @@ exports.update = function(req, res) {
   
 
 
+/**
+ *  Atualiza os dados do knight
+ */
+exports.update = function(req, res) {
+    KnightModel.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, function(error, object) {
+      if(error){
+        res.send(error);
+      }else{
+        res.json(object);
+      }
+    });
+  }
+
+
+
 
   /**
    *  Exclui um elemento da lista principal 'Knights' fazendo com que passe para lista 'Hall of Heroes'  
    */
   exports.softDelete = function (req, res) {
 
-    KnightModel.findOneAndUpdate({_id: req.params.id}, {isHero : true},  function(error, object) {
+    KnightModel.findOneAndUpdate({_id: req.params.id}, {isHero : true}, {new: true}, function(error, object) {
       if(error){
         res.send(error);
       }else{
