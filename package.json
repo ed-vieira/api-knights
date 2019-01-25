@@ -2,7 +2,7 @@
   "name": "api-knights",
   "version": "1.0.0",
   "description": "API para o desafio Knights",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "test"
   },
