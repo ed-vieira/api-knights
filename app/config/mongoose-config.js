@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 //importa os schemas
-var Schemas = require('./Schemas');
+var Schemas = require('../models/Schemas');
 
 //MongoDB URL 
 const url= 'mongodb://localhost:27017/knights_db';

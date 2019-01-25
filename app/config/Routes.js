@@ -2,19 +2,21 @@
 module.exports = function(app){
 
     var KnightCtrl = require('../controllers/KnightController');
+ 
+    const url ="/api/knights"
 
-    app.route('/knights')
+    app.route(url)
       .get(KnightCtrl.getAllKnights)
         .post(KnightCtrl.add);
 
-    app.route('/knights/:id')
+    app.route( url+'/:id')
        .get(KnightCtrl.getById)
          .put(KnightCtrl.update)
            .delete(KnightCtrl.softDelete);
  
-    app.route('/knights/filter/:param').get(KnightCtrl.getHeroes);  
+    app.route(url+'/filter/:param').get(KnightCtrl.getHeroes);  
 
-    app.route('/knights/filter/:param/:id').get(KnightCtrl.getHeroById); 
+    app.route(url+'/filter/:param/:id').get(KnightCtrl.getHeroById); 
 
 
 };
