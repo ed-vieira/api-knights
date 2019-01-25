@@ -93,7 +93,6 @@ KnightSchema.pre('findOne', softDelete);
 
 
 
-
 /**
  * Modificadores de atributos
  */

@@ -66,31 +66,19 @@ exports.update = function(req, res) {
   /**
    *  Exclui um elemento da lista principal 'Knights' fazendo com que passe para lista 'Hall of Heroes'  
    */
-  exports.delete = function (req, res) {
+  exports.softDelete = function (req, res) {
 
-    KnightModel.findById(req.params.id, function(error, object){
+    KnightModel.findOneAndUpdate({_id: req.params.id}, {isHero : true},  function(error, object) {
       if(error){
-          res.send({
-             message: "Knight não encontrado",
-             details: `Busca por id= ${req.params.knight_id} não retornou nenhum resultado.`,
-             default:{error}
-          });
+        res.send(error);
       }else{
-  
-         object.isHero= true;
-         object.save(function(err, object) {
-            if(err){
-              res.send(err);
-             }else{
-             res.json({message: "Knight Removido", object});
-             }    
-        });
-         
+        res.json(object);
       }
-  
-  });
+    });
     
 }
+
+
 
 
 /**
@@ -105,7 +93,25 @@ exports.getHeroes = function(req, res){
       res.json(objects);
     }
 })
+}
 
+
+/**
+ * seleciona um elemento por id
+ */
+exports.getHeroById= function(req, res){
+  KnightModel.findOne({ _id: req.params.id, isHero: true}, function(error, object){
+      if(error){
+         res.send({
+            message: "Knight não encontrado",
+            details: "Busca por id= "+req.params.id+" não retornou nenhum resultado.",
+             default:{error}
+         });
+      }else{
+         res.json(object);
+      }
+
+  });
 }
 
 

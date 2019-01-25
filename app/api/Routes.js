@@ -10,11 +10,11 @@ module.exports = function(app){
     app.route('/knights/:id')
        .get(KnightCtrl.getById)
          .put(KnightCtrl.update)
-           .delete(KnightCtrl.delete);
+           .delete(KnightCtrl.softDelete);
  
     app.route('/knights/filter/:param').get(KnightCtrl.getHeroes);  
 
-    
+    app.route('/knights/filter/:param/:id').get(KnightCtrl.getHeroById); 
 
 
 };
