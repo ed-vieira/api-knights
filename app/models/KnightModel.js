@@ -8,7 +8,7 @@ var moment = require('moment');
 
 /**
  * Define o esquema e habilita o uso de atributos 'virtuais' que são gerados
- * apartir de combinações a calculos de atributos existentes
+ * apartir de combinações e calculos de atributos existentes
  */
 const KnightSchema = new Schema({
    
